@@ -2,14 +2,14 @@ package com.example.efrigerator9;
 
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
-import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
+
 import android.view.View;
 
 public class baseActivity extends SherlockFragmentActivity implements TabListener{
@@ -31,20 +31,17 @@ public class baseActivity extends SherlockFragmentActivity implements TabListene
 	}
 
 	
-	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
 		// TODO Auto-generated method stub
 		
 		
 	}
 
-	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 		// TODO Auto-generated method stub
 		
@@ -60,6 +57,31 @@ public class baseActivity extends SherlockFragmentActivity implements TabListene
 	
 
 	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onTabSelected(Tab tab,
+			android.support.v4.app.FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onTabUnselected(Tab tab,
+			android.support.v4.app.FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
+	@Override
+	public void onTabReselected(Tab tab,
+			android.support.v4.app.FragmentTransaction ft) {
 		// TODO Auto-generated method stub
 		
 	}
