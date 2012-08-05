@@ -1,3 +1,8 @@
+// <title> Simple Guesture which enabled us to use swipe touch gesture  </title>
+
+// <revision>
+// 08-05-2012 : aat
+// added formatting to file
 package com.example.efrigerator9;
 
 import android.app.Activity;
@@ -5,7 +10,8 @@ import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 
-public class SimpleGestureFilter extends SimpleOnGestureListener{
+public class SimpleGestureFilter extends SimpleOnGestureListener
+{
     
 	 public final static int SWIPE_UP    = 1;
 	 public final static int SWIPE_DOWN  = 2;
@@ -30,17 +36,20 @@ public class SimpleGestureFilter extends SimpleOnGestureListener{
 	 private SimpleGestureListener listener;
 	 
 	 
-	 public SimpleGestureFilter(Activity context,SimpleGestureListener sgl) {
+	 public SimpleGestureFilter(Activity context,SimpleGestureListener sgl) 
+	 {
 	 
-	  this.context = context;
-	  this.detector = new GestureDetector(context, this);
-	  this.listener = sgl; 
+		  this.context = context;
+		  this.detector = new GestureDetector(context, this);
+		  this.listener = sgl; 
 	 }
 	 
-	 public void onTouchEvent(MotionEvent event){
+	 public void onTouchEvent(MotionEvent event)
+	 {
 	  
 	   if(!this.running)
-	  return;  
+	 
+		   return;  
 	  
 	   boolean result = this.detector.onTouchEvent(event); 
 	  

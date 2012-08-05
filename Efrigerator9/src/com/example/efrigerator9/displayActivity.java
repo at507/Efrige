@@ -1,3 +1,10 @@
+// <title> This is display activity. This activity is followed by calendar activity</title>
+
+// <author> aat </author>
+
+// <revision>
+// 08-05-2012 : aat
+// added formatting to file
 package com.example.efrigerator9;
 
 
@@ -32,7 +39,8 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-public class displayActivity extends baseActivity implements OnClickListener, OnChangeAttemptListener, OnCheckedChangeListener{
+public class displayActivity extends baseActivity implements OnClickListener, OnChangeAttemptListener, OnCheckedChangeListener
+{
 	private TextView title,previous_day, next_day;
 	private String dater;
 	private GridView ItemView;
@@ -42,18 +50,16 @@ public class displayActivity extends baseActivity implements OnClickListener, On
 	private boolean Is_frozen=false;
 	MySwitch slideToUnLock;
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) 
+	{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_display);
 		Intent intent= getIntent();
 		
 		switcher = (ViewSwitcher) findViewById(R.id.profileSwitcher);
-	//	SwitchButton= (RadioGroup) findViewById(R.id.switch1);
-	//	SwitchButton.setOnCheckedChangeListener(this);
-		
-		 slideToUnLock = (MySwitch)findViewById(R.id.switch1);
-		 slideToUnLock.setOnCheckedChangeListener(this);
+		slideToUnLock = (MySwitch)findViewById(R.id.switch1);
+		slideToUnLock.setOnCheckedChangeListener(this);
 	    dater= intent.getStringExtra("date");
 		 
 		title = (TextView) findViewById(R.id.title);
@@ -71,19 +77,19 @@ public class displayActivity extends baseActivity implements OnClickListener, On
 	}
 
 	@Override
-	public void onClick(View v) {
+	public void onClick(View v) 
+	{
 		// TODO Auto-generated method stub
-		 final String[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-			
+		 final String[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };		
 		 DateFormat formatter ; 
 		 Date date = null ; 
 		 formatter = new SimpleDateFormat("dd-MMM-yy");
 		 Calendar cal=Calendar.getInstance();
 		  
-		super.onClick(v);
-		switch (v.getId()) {
+		 super.onClick(v);
+		 switch (v.getId()) {
 		
-		case R.id.addItem_cold :
+		 case R.id.addItem_cold :
 			final EditText input = new EditText(this); // This could also come from an xml resource, in which case you would use findViewById() to access the input
 			AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
 			float vol = (float) 0.5; //This will be half of the default system sound
@@ -116,14 +122,15 @@ public class displayActivity extends baseActivity implements OnClickListener, On
 							ItemView = (GridView) findViewById(R.id.items_normal);	
 							ItemView.setAdapter(new addItemAdapter(displayActivity.this, Normal_itemsadded));
 						}
-										 
-						
+									 
+					
 					}
-			        
-			     
+		        
+		     
 					dialog.dismiss();
 				}
 			});
+			
 			builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() 
 			{
 				  public void onClick(DialogInterface dialog, int whichButton) 
@@ -134,7 +141,8 @@ public class displayActivity extends baseActivity implements OnClickListener, On
 			});
 			builder.show();
 			break;
-		case R.id.addItem_normal :
+		
+		 case R.id.addItem_normal :
 			final EditText input_n = new EditText(this); // This could also come from an xml resource, in which case you would use findViewById() to access the input
 			AudioManager am_n = (AudioManager)getSystemService(AUDIO_SERVICE);
 			float vol_n = (float) 0.5; //This will be half of the default system sound
@@ -205,102 +213,101 @@ public class displayActivity extends baseActivity implements OnClickListener, On
 			 break;
 			
 		case R.id.next_day:
-				  formatter = new SimpleDateFormat("dd-MMM-yy");
-				  try 
-				  {
-					  	date = (Date)formatter.parse(dater);
-				  } catch (ParseException e) 
-				  {
-					  // TODO Auto-generated catch block
-				  		e.printStackTrace();
-				  } 
-			
-				 cal.setTime(date);
-				 cal.add(Calendar.DATE, 1);
-				 dater = cal.get(Calendar.DATE)+"-"+months[cal.get(Calendar.MONTH)]+"-"+cal.get(Calendar.YEAR);
-				 title.setText(dater);	
-				 break;
+			 formatter = new SimpleDateFormat("dd-MMM-yy");
+			 try 
+			 {
+				  	date = (Date)formatter.parse(dater);
+			 } catch (ParseException e) 
+			 {
+				  // TODO Auto-generated catch block
+			  		e.printStackTrace();
+			 } 
+			 cal.setTime(date);
+			 cal.add(Calendar.DATE, 1);
+			 dater = cal.get(Calendar.DATE)+"-"+months[cal.get(Calendar.MONTH)]+"-"+cal.get(Calendar.YEAR);
+			 title.setText(dater);	
+			 break;
 			
 		}
-		
-	
-	
 	
 	}
 	
-   public class addItemAdapter extends BaseAdapter {
+	public class addItemAdapter extends BaseAdapter 
+	{
 		private Context context;
 		private final ArrayList<String> Item; 
 	 
-		public addItemAdapter(Context context, ArrayList<String> itemsadded) {
+		public addItemAdapter(Context context, ArrayList<String> itemsadded) 
+		{
 			this.context = context;
 			this.Item = itemsadded;
 		}
 	 
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public View getView(int position, View convertView, ViewGroup parent) 
+		{
 	 
-			LayoutInflater inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	 
+			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View gridView;
 	 
-			if (convertView == null) {
-	 
-				gridView = new View(context);
-	 
-				
+			if (convertView == null) 
+			{
+				gridView = new View(context);	
 				gridView = inflater.inflate(R.layout.addeditem, null);
-				Button eachItem = (Button) gridView
-						.findViewById(R.id.added);
+				Button eachItem = (Button) gridView.findViewById(R.id.added);
 				eachItem.setText(Item.get(position));
-	 
-			} else {
+			} 
+			else 
+			{
 				gridView = (View) convertView;
 			}
-	 
+			
 			return gridView;
 		}
 	 
 		@Override
-		public int getCount() {
+		public int getCount()
+		{
 			return Item.size();
 		}
 	 
 		@Override
-		public Object getItem(int position) {
+		public Object getItem(int position)
+		{
 			return null;
 		}
 	 
 		@Override
-		public long getItemId(int position) {
+		public long getItemId(int position)
+		{
 			return 0;
 		}
 	 
 	}
   
-@Override
-public void onChangeAttempted(boolean isChecked) {
-	// TODO Auto-generated method stub
-	
-}
+	@Override
+	public void onChangeAttempted(boolean isChecked)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 
-@Override
-public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
-	// TODO Auto-generated method stub
-		
-	if(arg1){
-		
+	@Override
+	public void onCheckedChanged(CompoundButton arg0, boolean arg1) 
+	{
+		// TODO Auto-generated method stub
+			
+		if(arg1)
+		{		
 			switcher.showPrevious();
 			Is_frozen=true;
-	}
-	else{
-		
-		
+		}
+		else
+		{	
 			switcher.showNext();
 			Is_frozen=false;
+		}
+	
+	
 	}
-	
-	
-}
 
 }

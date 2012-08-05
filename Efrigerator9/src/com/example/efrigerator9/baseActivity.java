@@ -1,3 +1,11 @@
+// <title> this is base class </title>
+
+// <author> aat </author>
+
+// <revision>
+// 08-05-2012 : aat
+// added formatting to file
+
 package com.example.efrigerator9;
 
 import com.actionbarsherlock.app.ActionBar.Tab;
@@ -20,20 +28,13 @@ public class baseActivity extends SherlockFragmentActivity implements TabListene
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		actionBar = getSupportActionBar();
-		//		getActionBar();
-	actionBar.setDisplayShowHomeEnabled(false);
-	actionBar.setDisplayShowTitleEnabled(false);
-	//actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-	    
-		
-	    
+		actionBar.setDisplayShowHomeEnabled(false);
+		actionBar.setDisplayShowTitleEnabled(false);
 		
 	}
 
-	
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
 		
 	}
 
@@ -47,11 +48,10 @@ public class baseActivity extends SherlockFragmentActivity implements TabListene
 		
 	}
 
-		
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
-		 getSupportMenuInflater().inflate(R.menu.menu, menu);
+		getSupportMenuInflater().inflate(R.menu.menu, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 	
@@ -77,19 +77,11 @@ public class baseActivity extends SherlockFragmentActivity implements TabListene
 		
 	}
 
-	
-
 	@Override
 	public void onTabReselected(Tab tab,
 			android.support.v4.app.FragmentTransaction ft) {
 		// TODO Auto-generated method stub
 		
 	}
-
-
-	
-	
-	
-	
-	
+		
 }
