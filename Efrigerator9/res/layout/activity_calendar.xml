@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/header"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"    
+    >
+    
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="left"
+    >
+       
+<TextView  
+	android:id="@+id/previous" 
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:padding="5dp"
+    android:paddingLeft="5dp"
+    android:textSize="14sp"
+    android:textStyle="bold"
+    android:textColor="@color/blue"
+    android:gravity="center_horizontal"
+    android:text="&lt;&lt;" 
+    android:clickable="true"   
+    />
+</LinearLayout>
+
+<TextView  
+	android:id="@+id/title" 
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:padding="5dp"
+    android:paddingLeft="5dp"
+    android:textSize="20dip"
+    android:textStyle="bold"
+    android:textColor="@color/blue"
+    android:gravity="center_horizontal"
+    android:layout_toRightOf="@+id/previous"
+    />
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="right"
+    android:layout_toRightOf="@+id/title"
+    >
+<TextView  
+	android:id="@+id/next" 
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:padding="5dp"
+    android:paddingLeft="5dp"
+    android:textSize="14sp"
+    android:textStyle="bold"
+    android:textColor="@color/blue"
+    android:gravity="center_horizontal"
+    android:text=">>"
+    android:clickable="true"
+    />
+
+
+</LinearLayout>
+
+
+   
+
+</RelativeLayout>
+ <GridView
+    
+    android:id="@+id/daysofweek"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:stretchMode="columnWidth"
+    android:horizontalSpacing="-1dip"
+    android:numColumns="7"
+    android:verticalSpacing="-1dip" >
+	
+	</GridView>
+
+     
+ <GridView
+    android:id="@+id/calendar"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:horizontalSpacing="-1dip"
+    android:isScrollContainer="false"
+    android:numColumns="7"
+    android:stretchMode="columnWidth"
+    android:verticalSpacing="-1dip" >
+ </GridView>
+</LinearLayout>

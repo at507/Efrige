@@ -1,0 +1,44 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.efrigerator9"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="15" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.AndroidDevelopers"
+          >
+        <activity
+            
+            android:name=".CalendarActivity"
+            android:label="@string/app_name"
+            
+             android:configChanges="orientation|keyboardHidden"
+             >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+         <activity
+            android:name=".baseActivity"
+            android:label="@string/app_name" 
+           >
+        </activity>
+        <activity
+            android:name=".displayActivity"
+            android:label="@string/app_name" 
+            android:launchMode="standard"
+            android:configChanges="orientation|keyboardHidden"
+           >
+        </activity>
+        
+    </application>
+
+</manifest>
