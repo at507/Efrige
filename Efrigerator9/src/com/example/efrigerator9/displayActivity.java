@@ -5,6 +5,11 @@
 // <revision>
 // 08-05-2012 : aat
 // added formatting to file
+// Issue #2: 20120810 at
+// DS databasehelper activity creation
+// Except deletion, added every functionality mentioned in DS
+
+//</revision>
 package com.example.efrigerator9;
 
 
@@ -23,6 +28,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -47,8 +53,13 @@ public class displayActivity extends baseActivity implements OnClickListener, On
 	private ArrayList<String> Cold_itemsadded = new ArrayList<String>();
 	private ArrayList<String> Normal_itemsadded = new ArrayList<String>();
 	private ViewSwitcher switcher;
-	private boolean Is_frozen=false;
+	private boolean Is_frozen=true;
 	MySwitch slideToUnLock;
+	 Cursor cursor,cursor_next,cursor_prev;
+	DateFormat formatter_db=new SimpleDateFormat("dd-MMM-yy");
+	 Date date_db;
+	 addItemAdapter frozenAdapter=  new addItemAdapter(displayActivity.this, Cold_itemsadded); ;
+	 addItemAdapter normalAdapter =  new addItemAdapter(displayActivity.this, Normal_itemsadded); ;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
@@ -57,11 +68,46 @@ public class displayActivity extends baseActivity implements OnClickListener, On
 		setContentView(R.layout.activity_display);
 		Intent intent= getIntent();
 		
+		
 		switcher = (ViewSwitcher) findViewById(R.id.profileSwitcher);
 		slideToUnLock = (MySwitch)findViewById(R.id.switch1);
 		slideToUnLock.setOnCheckedChangeListener(this);
 	    dater= intent.getStringExtra("date");
 		 
+	  //  formatter_db = new SimpleDateFormat("dd-MMM-yy");
+		 
+	    cursor = fridgeData.query();
+	    startManagingCursor(cursor);
+
+	    // Setup Adapter
+	   // String[] fromdb_ToDisplay = {  fridgeData.C_ITEM };
+	   // int[] to = { R.id.textUser, R.id.textText, R.id.textCreatedAt };
+	    if (cursor.getCount()>0)
+	    {
+	    	while (cursor.moveToNext())
+	    	
+	    	{
+	    		if(cursor.getString(1).equals(dater))
+	    		{
+	    			String test = cursor.getString(2);
+	    			String cat = cursor.getString(3);
+		    		if(cat.equals("Frozen"))
+		    		{
+		    			Cold_itemsadded.add(test);
+		    			ItemView = (GridView) findViewById(R.id.items_cold);	
+		    			ItemView.setAdapter(new addItemAdapter(displayActivity.this, Cold_itemsadded));
+		    		}
+		    		else
+		    		{
+		    			Normal_itemsadded.add(test);
+						ItemView = (GridView) findViewById(R.id.items_normal);	
+						ItemView.setAdapter(new addItemAdapter(displayActivity.this, Normal_itemsadded));
+					
+									 
+		    		}
+	    		}
+	    	}
+	    }
 		title = (TextView) findViewById(R.id.title);
 		title.setText(dater);
 		Button addItem_cold_Button = (Button)findViewById(R.id.addItem_cold);
@@ -109,24 +155,25 @@ public class displayActivity extends baseActivity implements OnClickListener, On
 					if(!value.isEmpty())
 					{
 						
-						if (!Is_frozen)
+					//	if (!Is_frozen)
 						{
 							Cold_itemsadded.add(value);
 							ItemView = (GridView) findViewById(R.id.items_cold);	
 							ItemView.setAdapter(new addItemAdapter(displayActivity.this, Cold_itemsadded));
 							
 						}
-						else
+					/*	else
 						{
 							Normal_itemsadded.add(value);
 							ItemView = (GridView) findViewById(R.id.items_normal);	
 							ItemView.setAdapter(new addItemAdapter(displayActivity.this, Normal_itemsadded));
-						}
+						}*/
 									 
 					
 					}
 		        
-		     
+					
+		            fridgeData.insert(100, dater, value, "Frozen");
 					dialog.dismiss();
 				}
 			});
@@ -162,24 +209,19 @@ public class displayActivity extends baseActivity implements OnClickListener, On
 					if(!value.isEmpty())
 					{
 						
-						if (!Is_frozen)
-						{
-							Cold_itemsadded.add(value);
-							ItemView = (GridView) findViewById(R.id.items_cold);	
-							ItemView.setAdapter(new addItemAdapter(displayActivity.this, Cold_itemsadded));
-							
-						}
-						else
-						{
+						
 							Normal_itemsadded.add(value);
 							ItemView = (GridView) findViewById(R.id.items_normal);	
 							ItemView.setAdapter(new addItemAdapter(displayActivity.this, Normal_itemsadded));
-						}
+						
 										 
 						
 					}
 			        
-			     
+					
+					
+		            fridgeData.insert(100, dater, value, "Normal");
+		            
 					dialog.dismiss();
 				}
 			});
@@ -210,6 +252,52 @@ public class displayActivity extends baseActivity implements OnClickListener, On
 			 cal.add(Calendar.DATE, -1);
 			 dater = cal.get(Calendar.DATE)+"-"+months[cal.get(Calendar.MONTH)]+"-"+cal.get(Calendar.YEAR);
 			 title.setText(dater);
+			 Cold_itemsadded.clear();
+			 Normal_itemsadded.clear();
+			 cursor_prev = fridgeData.query();
+			 startManagingCursor(cursor_prev);
+			 			
+			 cursor_prev.moveToFirst();
+			 if (cursor_prev.getCount()>0)
+			    {
+			    	do 
+			    	
+			    	{
+			    		if(cursor_prev.getString(1).equals(dater))
+			    		{
+			    			String test_prev = cursor_prev.getString(2);
+			    			String cat = cursor_prev.getString(3);
+				    		if(cat.equals("Frozen"))
+				    		{
+				    			Cold_itemsadded.add(test_prev);
+				    			//ItemView = (GridView) findViewById(R.id.items_cold);	
+				    			//ItemView.setAdapter(new addItemAdapter(displayActivity.this, Cold_itemsadded));
+				    		}
+				    		else
+				    		{
+				    			Normal_itemsadded.add(test_prev);
+				    			//	ItemView = (GridView) findViewById(R.id.items_normal);	
+				    			//	ItemView.setAdapter(new addItemAdapter(displayActivity.this, Normal_itemsadded));
+							
+											 
+				    		}
+			    		}
+			    	}while(cursor_prev.moveToNext());
+			    }
+			 if(Is_frozen)
+			 {
+			 	ItemView = (GridView) findViewById(R.id.items_cold);
+			    ItemView.setAdapter(this.frozenAdapter);
+			    this.frozenAdapter.notifyDataSetChanged();
+			    
+			 }
+			 else
+			 {
+			 	ItemView = (GridView) findViewById(R.id.items_normal);	
+			    ItemView.setAdapter(this.normalAdapter);
+			    this.normalAdapter.notifyDataSetChanged();
+			 }
+			 
 			 break;
 			
 		case R.id.next_day:
@@ -225,7 +313,55 @@ public class displayActivity extends baseActivity implements OnClickListener, On
 			 cal.setTime(date);
 			 cal.add(Calendar.DATE, 1);
 			 dater = cal.get(Calendar.DATE)+"-"+months[cal.get(Calendar.MONTH)]+"-"+cal.get(Calendar.YEAR);
-			 title.setText(dater);	
+			 title.setText(dater);
+			 
+			 //frozenAdapter = new addItemAdapter(displayActivity.this, Cold_itemsadded);
+			 //normalAdapter =  new addItemAdapter(displayActivity.this, Normal_itemsadded);
+			 Cold_itemsadded.clear();
+			 Normal_itemsadded.clear();
+			 
+			
+			 cursor_next = fridgeData.query();
+			    startManagingCursor(cursor_next);
+			 cursor_next.moveToFirst();
+			 if (cursor_next.getCount()>0)
+			    {
+			    	do 
+			    	
+			    	{
+			    		if(cursor_next.getString(1).equals(dater))
+			    		{
+			    			String test_next = cursor_next.getString(2);
+			    			String cat = cursor_next.getString(3);
+				    		if(cat.equals("Frozen"))
+				    		{
+				    			Cold_itemsadded.add(test_next);
+				    			
+				    			
+				    		}
+				    		else
+				    		{
+				    			Normal_itemsadded.add(test_next);
+								
+											 
+				    		}
+			    		}
+			    	}while (cursor_next.moveToNext());
+			    }
+			 if(Is_frozen)
+			 {
+			 	ItemView = (GridView) findViewById(R.id.items_cold);
+			    ItemView.setAdapter(this.frozenAdapter);
+			    this.frozenAdapter.notifyDataSetChanged();
+			    
+			 }
+			 else
+			 {
+			 	ItemView = (GridView) findViewById(R.id.items_normal);	
+			    ItemView.setAdapter(this.normalAdapter);
+			    this.normalAdapter.notifyDataSetChanged();
+			 }
+			 
 			 break;
 			
 		}
@@ -298,13 +434,88 @@ public class displayActivity extends baseActivity implements OnClickListener, On
 			
 		if(arg1)
 		{		
+			Is_frozen=false;
 			switcher.showPrevious();
-			Is_frozen=true;
+			 Cold_itemsadded.clear();
+			 Normal_itemsadded.clear();
+			 
+			
+			 cursor_next = fridgeData.query();
+			    startManagingCursor(cursor_next);
+			 cursor_next.moveToFirst();
+			 if (cursor_next.getCount()>0)
+			    {
+			    	do 
+			    	
+			    	{
+			    		if(cursor_next.getString(1).equals(dater))
+			    		{
+			    			String test_next = cursor_next.getString(2);
+			    			String cat = cursor_next.getString(3);
+				    		if(!(cat.equals("Frozen")))
+				    		//{
+				    			//Cold_itemsadded.add(test_next);
+				    			
+				    			
+				    	//	}
+				    		//else
+				    		{
+				    			Normal_itemsadded.add(test_next);
+								
+											 
+				    		}
+			    		}
+			    	}while (cursor_next.moveToNext());
+			    }
+			
+			 {
+			 	ItemView = (GridView) findViewById(R.id.items_normal);	
+			    ItemView.setAdapter(this.normalAdapter);
+			    this.normalAdapter.notifyDataSetChanged();
+			 }
+			
+			
 		}
 		else
 		{	
+			Is_frozen=true;
 			switcher.showNext();
-			Is_frozen=false;
+			
+			Cold_itemsadded.clear();
+			 Normal_itemsadded.clear();
+			 cursor_prev = fridgeData.query();
+			 startManagingCursor(cursor_prev);
+			 			
+			 cursor_prev.moveToFirst();
+			 if (cursor_prev.getCount()>0)
+			    {
+			    	do 
+			    	
+			    	{
+			    		if(cursor_prev.getString(1).equals(dater))
+			    		{
+			    			String test_prev = cursor_prev.getString(2);
+			    			String cat = cursor_prev.getString(3);
+				    		if(cat.equals("Frozen"))
+				    		{
+				    			Cold_itemsadded.add(test_prev);
+				    			//ItemView = (GridView) findViewById(R.id.items_cold);	
+				    			//ItemView.setAdapter(new addItemAdapter(displayActivity.this, Cold_itemsadded));
+				    		}
+				    		
+			    		}
+			    	}while(cursor_prev.moveToNext());
+			    }
+			// if(Is_frozen)
+			 {
+			 	ItemView = (GridView) findViewById(R.id.items_cold);
+			    ItemView.setAdapter(this.frozenAdapter);
+			    this.frozenAdapter.notifyDataSetChanged();
+			    
+			 }
+			 
+			
+			
 		}
 	
 	

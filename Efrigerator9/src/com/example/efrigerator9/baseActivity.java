@@ -1,11 +1,13 @@
 // <title> this is base class </title>
-
 // <author> aat </author>
 
 // <revision>
 // 08-05-2012 : aat
 // added formatting to file
-
+// Issue #2: 20120810 at
+// DS databasehelper activity creation
+// Except deletion, added every functionality mentioned in DS
+//</revision>
 package com.example.efrigerator9;
 
 import com.actionbarsherlock.app.ActionBar.Tab;
@@ -23,6 +25,7 @@ import android.view.View;
 public class baseActivity extends SherlockFragmentActivity implements TabListener{
 	
 	protected ActionBar actionBar;
+	FridgeData fridgeData;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -30,7 +33,7 @@ public class baseActivity extends SherlockFragmentActivity implements TabListene
 		actionBar = getSupportActionBar();
 		actionBar.setDisplayShowHomeEnabled(false);
 		actionBar.setDisplayShowTitleEnabled(false);
-		
+		fridgeData= new FridgeData(this);
 	}
 
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {

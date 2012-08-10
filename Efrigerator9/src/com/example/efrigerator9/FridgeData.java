@@ -1,6 +1,9 @@
 //<revision>
 // Issue #2: 20120807 at
 // DS databasehelper activity creation
+// Issue #2: 20120810 at
+// DS databasehelper activity creation
+// Except deletion, added every functionality mentioned in DS
 // </revision>
 package com.example.efrigerator9;
 
@@ -18,7 +21,7 @@ import android.provider.BaseColumns;
 public class FridgeData {
 	
 	public static final String C_ID = BaseColumns._ID; // Special for id
-	  public static final String C_CREATED_DATE = "Fridge_createdDate";
+	  public static final String C_CREATED_DATE = "Fridge_createdDate"; 
 	  public static final String C_ITEM = "Fridge_item";
 	  public static final String C_CAT = "Fridge_category";
 
@@ -62,14 +65,14 @@ public class FridgeData {
 	   * @param status
 	   *          Status data as provided by online service
 	   */
-	  /*public long insert(Status status) {
+	  public long insert(int id,String exp_date,String item_name, String Cat ) {
 	    ContentValues values = new ContentValues();
-	    values.put(StatusData.C_ID, status.id);
-	    values.put(StatusData.C_CREATED_AT, status.createdAt.getTime());
-	    values.put(StatusData.C_USER, status.user.name);
-	    values.put(StatusData.C_TEXT, status.text);
+	  //  values.put(FridgeData.C_ID, null);
+	    values.put(FridgeData.C_CREATED_DATE, exp_date);
+	    values.put(FridgeData.C_ITEM, item_name);
+	    values.put(FridgeData.C_CAT, Cat);
 	    return this.insert(values);
-	  }*/
+	  }
 	  
 	  /**
 	   * Deletes ALL the data
@@ -95,7 +98,7 @@ public class FridgeData {
 
 	  private class DbHelper extends SQLiteOpenHelper {
 		    public static final String DB_NAME = "timeline.db";
-		    public static final int DB_VERSION = 3;
+		    public static final int DB_VERSION = 4;
 		    public static final String TABLE = "statuses";
 
 		    public DbHelper() {
@@ -105,7 +108,7 @@ public class FridgeData {
 		    @Override
 		    public void onCreate(SQLiteDatabase db) {
 		      String sql = String.format(
-		          "create table %s (%s int primary key, %s INT, %s TEXT, %s TEXT)",
+		          "create table %s (%s int primary key, %s TEXT, %s TEXT, %s TEXT)",
 		          TABLE, C_ID, C_CREATED_DATE, C_ITEM, C_CAT);
 		      // sql = context.getString(R.string.sql);
 
