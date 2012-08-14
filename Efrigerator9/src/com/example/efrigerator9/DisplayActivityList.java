@@ -3,6 +3,9 @@
 // <author> aat </author>
 
 // <revision>
+// 20120813 : aat
+// Issue #2 : Fully functional database.
+// Finally deletion is successfully implemented
 // 08-05-2012 : aat
 // added formatting to file
 // Issue #2: 20120810 at
@@ -129,10 +132,12 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
 						        adb.setNegativeButton("Cancel", null);
 						        adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
 						            public void onClick(DialogInterface dialog, int which) {
-						                Cold_itemsadded.remove(positionToRemove);
+						            	fridgeData.delete(Cold_itemsadded.get(positionToRemove).toString());
+						            	Cold_itemsadded.remove(positionToRemove);
 						                frozenAdapter.notifyDataSetChanged();
 						            }});
 						        adb.show();
+						       
 
 
 							}
@@ -161,6 +166,7 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
 						        adb.setNegativeButton("Cancel", null);
 						        adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
 						            public void onClick(DialogInterface dialog, int which) {
+						            	fridgeData.delete(Normal_itemsadded.get(positionToRemove).toString());
 						                Normal_itemsadded.remove(positionToRemove);
 						                normalAdapter.notifyDataSetChanged();
 						            }});

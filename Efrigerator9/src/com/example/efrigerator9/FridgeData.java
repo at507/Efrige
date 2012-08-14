@@ -1,4 +1,7 @@
 //<revision>
+// 20120813 : aat
+// Issue #2 : Fully functional database.
+// Finally deletion is successfully implemented
 // Issue #2: 20120807 at
 // DS databasehelper activity creation
 // Issue #2: 20120810 at
@@ -51,6 +54,7 @@ public class FridgeData {
 	    long ret;
 	    try {
 	      ret = db.insertOrThrow(DbHelper.TABLE, null, values);
+	     
 	    } catch (SQLException e) {
 	      ret = -1;
 	    } finally {
@@ -77,7 +81,28 @@ public class FridgeData {
 	  /**
 	   * Deletes ALL the data
 	   */
-	  public void delete() {
+	  
+	  public void delete(String item_name) {
+	    // Open Database
+	    SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+	    
+	    
+	    try {
+	      db.delete(DbHelper.TABLE, C_ITEM+"=?", new String[]{item_name});
+	   
+	    } catch (SQLException e) {
+	     
+	    } finally {
+	      db.close();
+	    }
+	
+	  }
+
+	  /**
+	   * Deletes ALL the data
+	   */
+	  public void delete_all() {
 	    // Open Database
 	    SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -91,7 +116,6 @@ public class FridgeData {
 	  public Cursor query() {
 	    // Open Database
 	    SQLiteDatabase db = dbHelper.getReadableDatabase();
-
 	    return db.query(DbHelper.TABLE, null, null, null, null, null, C_CREATED_DATE
 	        + " DESC");
 	  }
