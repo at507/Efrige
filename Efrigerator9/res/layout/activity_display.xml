@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    >
+    xmlns:app="http://schemas.android.com/apk/res/com.example.efrigerator9">
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/header"
@@ -42,7 +42,7 @@
     android:layout_centerHorizontal="true"
     android:padding="5dp"
     android:paddingLeft="5dp"
-    android:textSize="14sp"
+    android:textSize="20dp"
     android:textStyle="bold"
     android:textColor="@color/Blue"
     android:gravity="center_horizontal"
@@ -98,78 +98,80 @@
         android:layout_marginTop="4dp"
         android:gravity="center"
         mySwitch:textOff="Frozen"
-        mySwitch:textOn="Normal" />
+        mySwitch:textOn="Normal" 
+        android:textSize= "20dp"/>
     
    
 </LinearLayout>
 
 <ViewSwitcher 
     android:id="@+id/profileSwitcher"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-   
-   
-    >
-	<Button  
-	android:id="@+id/addItem_cold" 
-    android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-   
-    android:gravity="center"
-    
-    android:background="@drawable/additemaction"
-    />
-	
-
-
-    <GridView
-    
-    android:id="@+id/items_cold"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:stretchMode="columnWidth"
-    android:horizontalSpacing="-1dip"
-    android:numColumns="5"
-    android:verticalSpacing="-1dip" >
-	
-	</GridView>
-	
-</LinearLayout>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp">
+    
+      
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical">
+    
+	     <Button 
+             android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/buttonaction"
+    android:id="@+id/addItem_cold"
+    android:text= "Add Item"
+    android:textSize="20dp"
+    
+            />
+	<ListView
+     android:id="@+id/list_cold"
+     android:layout_width="fill_parent"
+     android:layout_height="wrap_content"
+     android:background="@drawable/customnoshape"
+     >
+	</ListView>
+
    
+    
+       
+           
+  
+   </LinearLayout>
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
    
-    >
+  
+	
 	<Button  
 	android:id="@+id/addItem_normal" 
     android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
    
     android:gravity="center"
     
-    android:background="@drawable/additemaction"
-    />
+    android:background="@drawable/buttonaction"
+     android:text= "Add Item"
+     android:textSize="20dp"/>
 
-    
- <GridView
-    
-    android:id="@+id/items_normal"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:stretchMode="columnWidth"
-    android:horizontalSpacing="-1dip"
-    android:numColumns="5"
-    android:verticalSpacing="-1dip" >
+   
 	
-	</GridView>
+ 	<ListView
+     android:id="@+id/list_normal"
+     android:layout_width="fill_parent"
+     android:layout_height="wrap_content" 
+     android:background="@drawable/customnoshape"
+     >
+	</ListView>
 
  
-</LinearLayout>
+	
+	</LinearLayout>
+ 
  </ViewSwitcher>
 
 

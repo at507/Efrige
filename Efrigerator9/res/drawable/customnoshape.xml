@@ -1,0 +1,12 @@
+<!-- Revision history
+
+
+20120813 : aat
+Issue #2 : created this weird name xml for listview in DisplayActitivityList
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <stroke android:width="4dp" android:color="@color/White" />
+   <padding android:left="1dp" android:top="1dp"
+            android:right="1dp" android:bottom="1dp" />
+    <corners android:radius="10dp" android:color= "@color/White" />
+</shape> 

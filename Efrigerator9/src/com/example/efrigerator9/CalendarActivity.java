@@ -328,7 +328,7 @@ public class CalendarActivity extends baseActivity implements OnClickListener,Si
 					am.playSoundEffect(AudioManager.FX_KEY_CLICK, vol);
 					Vibrator vb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE); 
 					vb.vibrate(40);
-					Intent intent = new Intent(CalendarActivity.this, displayActivity.class);
+					Intent intent = new Intent(CalendarActivity.this, DisplayActivityList.class);
 					intent.putExtra("date", date_month_year);
 					startActivity(intent); 	        
 				
