@@ -3,9 +3,12 @@
 // <author> aat </author>
 
 // <revision>
-// 20120813 : aat
-// Issue #2 : Fully functional database.
-// Finally deletion is successfully implemented
+// 20120814 : aat
+// Issue #2 :  database.
+// fixed addition of blanked spaces in listview
+// 20120814 : aat
+// Issue #2 :  database.
+// fixed addition of blanked spaces in listview
 // 08-05-2012 : aat
 // added formatting to file
 // Issue #2: 20120810 at
@@ -223,11 +226,12 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
 								ItemView = (ListView) findViewById(R.id.list_cold);	
 								//ItemView.setAdapter(new SpecialAdapter(DisplayActivityList.this, Cold_itemsadded));
 								ItemView.setAdapter(frozenAdapter);
+								fridgeData.insert(100, dater, value, "Frozen");
 							}
 			 
 						
 						}
-			            fridgeData.insert(100, dater, value, "Frozen");
+			            
 						dialog.dismiss();
 					}
 				});
@@ -267,11 +271,11 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
 								ItemView = (ListView) findViewById(R.id.list_normal);	
 								//ItemView.setAdapter(new SpecialAdapter(DisplayActivityList.this, Normal_itemsadded));
 								ItemView.setAdapter(normalAdapter);
+								fridgeData.insert(100, dater, value, "Normal");
 							}
 							
-						
 						}
-			            fridgeData.insert(100, dater, value, "Normal");
+			            
 						dialog.dismiss();
 					}
 				});
