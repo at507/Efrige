@@ -8,6 +8,9 @@
        
         android:showAsAction="ifRoom|withText">       
     </item> 
+   <item android:id="@+id/Start" android:title="Start"
+        android:showAsAction="always|withText">     </item>
+   
    <item android:id="@+id/preferences"
         
        
@@ -15,6 +18,8 @@
        
         android:showAsAction="always|withText">       
     </item>
+   
+   <item android:id="@+id/Stop" android:title="Stop" android:showAsAction="always|withText">     </item>
     
     
 

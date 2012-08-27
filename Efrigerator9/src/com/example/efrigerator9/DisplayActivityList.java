@@ -100,7 +100,7 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
 		next_day.setOnClickListener(this);	
 		frozenAdapter = new SpecialAdapter(DisplayActivityList.this, Cold_itemsadded);
 		normalAdapter = new SpecialAdapter(DisplayActivityList.this, Normal_itemsadded);
-		 cursor = fridgeData.query();
+		 cursor = efridge.fridgeData.query();
 		 startManagingCursor(cursor);
 
 	    if (cursor.getCount()>0)
@@ -121,7 +121,6 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
 		    			ItemView.setOnItemClickListener(new OnItemClickListener() {
 		    			
 		    				
-		    				
 							@Override
 							public void onItemClick(AdapterView<?> arg0,
 									View v, int position, long id) {
@@ -135,7 +134,7 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
 						        adb.setNegativeButton("Cancel", null);
 						        adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
 						            public void onClick(DialogInterface dialog, int which) {
-						            	fridgeData.delete(Cold_itemsadded.get(positionToRemove).toString());
+						            	efridge.fridgeData.delete(Cold_itemsadded.get(positionToRemove).toString());
 						            	Cold_itemsadded.remove(positionToRemove);
 						                frozenAdapter.notifyDataSetChanged();
 						            }});
@@ -169,7 +168,7 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
 						        adb.setNegativeButton("Cancel", null);
 						        adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
 						            public void onClick(DialogInterface dialog, int which) {
-						            	fridgeData.delete(Normal_itemsadded.get(positionToRemove).toString());
+						            	efridge.fridgeData.delete(Normal_itemsadded.get(positionToRemove).toString());
 						                Normal_itemsadded.remove(positionToRemove);
 						                normalAdapter.notifyDataSetChanged();
 						            }});
@@ -200,7 +199,7 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
 		 formatter = new SimpleDateFormat("dd-MMM-yy");
 		 Calendar cal=Calendar.getInstance();
 		 
-		 super.onClick(v);
+	//	 super.onClick(v);
 		 switch (v.getId()) {
 		
 		 case R.id.addItem_cold :
@@ -226,7 +225,7 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
 								ItemView = (ListView) findViewById(R.id.list_cold);	
 								//ItemView.setAdapter(new SpecialAdapter(DisplayActivityList.this, Cold_itemsadded));
 								ItemView.setAdapter(frozenAdapter);
-								fridgeData.insert(100, dater, value, "Frozen");
+								efridge.fridgeData.insert(100, dater, value, "Frozen");
 							}
 			 
 						
@@ -271,7 +270,7 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
 								ItemView = (ListView) findViewById(R.id.list_normal);	
 								//ItemView.setAdapter(new SpecialAdapter(DisplayActivityList.this, Normal_itemsadded));
 								ItemView.setAdapter(normalAdapter);
-								fridgeData.insert(100, dater, value, "Normal");
+								efridge.fridgeData.insert(100, dater, value, "Normal");
 							}
 							
 						}
@@ -309,7 +308,7 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
 			 title.setText(dater);
 			 Cold_itemsadded.clear();
 			 Normal_itemsadded.clear();
-			 cursor_prev = fridgeData.query();
+			 cursor_prev = efridge.fridgeData.query();
 			 startManagingCursor(cursor_prev);
 			 			
 			 cursor_prev.moveToFirst();
@@ -367,7 +366,7 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
 			 title.setText(dater);
 			 Cold_itemsadded.clear();
 			 Normal_itemsadded.clear();			
-			 cursor_next = fridgeData.query();
+			 cursor_next = efridge.fridgeData.query();
 			 startManagingCursor(cursor_next);
 			 cursor_next.moveToFirst();
 			 if (cursor_next.getCount()>0)
@@ -433,7 +432,7 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
 			switcher.showPrevious();
 			Cold_itemsadded.clear();
 			 Normal_itemsadded.clear();			
-			 cursor_next = fridgeData.query();
+			 cursor_next = efridge.fridgeData.query();
 			 startManagingCursor(cursor_next);
 			 cursor_next.moveToFirst();
 			 if (cursor_next.getCount()>0)
@@ -480,7 +479,7 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
 			switcher.showNext();
 			Cold_itemsadded.clear();
 			 Normal_itemsadded.clear();			
-			 cursor_next = fridgeData.query();
+			 cursor_next = efridge.fridgeData.query();
 			 startManagingCursor(cursor_next);
 			 cursor_next.moveToFirst();
 			 if (cursor_next.getCount()>0)

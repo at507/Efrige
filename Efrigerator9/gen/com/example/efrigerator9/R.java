@@ -1197,6 +1197,8 @@ containing a value of this type.
         public static final int sym_action_add=0x7f020086;
     }
     public static final class id {
+        public static final int Start=0x7f040040;
+        public static final int Stop=0x7f040042;
         public static final int abs__action_bar=0x7f040027;
         public static final int abs__action_bar_container=0x7f040026;
         public static final int abs__action_bar_subtitle=0x7f040016;
@@ -1247,7 +1249,7 @@ containing a value of this type.
         public static final int next=0x7f04002f;
         public static final int next_day=0x7f040033;
         public static final int normal=0x7f040001;
-        public static final int preferences=0x7f040040;
+        public static final int preferences=0x7f040041;
         public static final int previous=0x7f04002d;
         public static final int previous_day=0x7f040032;
         public static final int profileSwitcher=0x7f040035;
