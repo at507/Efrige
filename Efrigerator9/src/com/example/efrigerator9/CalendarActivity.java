@@ -13,32 +13,20 @@ import java.util.Locale;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
-
 import com.example.efrigerator9.SimpleGestureFilter.SimpleGestureListener;
-
-
-
-
 import android.content.Intent;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -151,7 +139,7 @@ public class CalendarActivity extends baseActivity implements OnClickListener,Si
 				private int daysInMonth, prevMonthDays;
 				private final int currentDayOfMonth;
 				private Button gridcell;
-			
+			    private int t_spaces=0;
 				// Days in Current Month
 				public GridCellAdapter(Context context, int textViewResourceId, int month, int year)
 				{
@@ -234,7 +222,8 @@ public class CalendarActivity extends baseActivity implements OnClickListener,Si
 					{
 						list.add(String.valueOf((daysInPrevMonth - trailingSpaces + 1) + i) + "-GREY" + "-" + months[prevMonth] + "-" + prevYear);
 					}
-
+                     
+					t_spaces=trailingSpaces;
 					// Current Month Days
 					for (int i = 1; i <= daysInMonth; i++)
 					{
@@ -306,7 +295,7 @@ public class CalendarActivity extends baseActivity implements OnClickListener,Si
 					{
 						gridcell.setTextColor(Color.BLACK);
 					}
-					if (position == currentDayOfMonth)
+					if (position == currentDayOfMonth+t_spaces-1)
 					{
 
 						if(this.month == currentMonth)

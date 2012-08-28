@@ -10,28 +10,18 @@
 //</revision>
 package com.example.efrigerator9;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+
 
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-
-
-
 import android.app.AlarmManager;
-import android.app.FragmentTransaction;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import android.view.View;
 import android.widget.Toast;
 
 public class baseActivity extends SherlockFragmentActivity implements ActionBar.TabListener{

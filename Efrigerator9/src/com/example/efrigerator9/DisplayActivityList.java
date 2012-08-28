@@ -52,10 +52,10 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
-import android.widget.GridView;
+
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import android.widget.ViewSwitcher;
 
 public class DisplayActivityList extends baseActivity implements  OnChangeAttemptListener, OnCheckedChangeListener, OnClickListener
