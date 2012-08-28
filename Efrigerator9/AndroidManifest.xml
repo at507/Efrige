@@ -27,11 +27,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-         <activity
+        
+        <activity
             android:name=".baseActivity"
             android:label="@string/app_name" 
            >
         </activity>
+        
         <activity
             android:name=".DisplayActivityList"
             android:label="@string/app_name" 
@@ -39,15 +41,14 @@
             android:configChanges="orientation|keyboardHidden"
            >
         </activity>
-        <service android:name=".NotificationService"></service>
+        
         
         <receiver android:name=".BootReceiver">
         	<intent-filter>
             	<action android:name="android.intent.action.BOOT_COMPLETED" />
-        	</intent-filter>
-        	
+        	</intent-filter>      	
     	</receiver>
-    
+    	    
     </application>
      <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 </manifest>

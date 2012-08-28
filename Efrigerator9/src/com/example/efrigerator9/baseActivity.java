@@ -37,7 +37,9 @@ import android.widget.Toast;
 public class baseActivity extends SherlockFragmentActivity implements ActionBar.TabListener{
 	
 //	protected ActionBar actionBar;
-	EfridgeApplication efridge; 
+	EfridgeApplication efridge;
+	AlarmManager am;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -54,36 +56,18 @@ public class baseActivity extends SherlockFragmentActivity implements ActionBar.
         }
 	
 		efridge = (EfridgeApplication)getApplication();
-		
-		//startService(new Intent(this,NotificationService.class));
+		am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+		Intent intent = new Intent(this, BootReceiver.class);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,intent, PendingIntent.FLAG_CANCEL_CURRENT);
+		am.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis() + (60 * 1000), pendingIntent);
+	
 	}
 	@Override
 	public void onTabSelected(Tab tab,
 			android.support.v4.app.FragmentTransaction ft) {
 		// TODO Auto-generated method stub
 		Toast.makeText(this, tab.getText(), Toast.LENGTH_LONG).show();
-		 final String[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };		
-		 DateFormat formatter ; 
-		 Date date = null ; 
-		 formatter = new SimpleDateFormat("dd-MMM-yy");
-		 Calendar cal=Calendar.getInstance();
-		 for (int i1= 1; i1< 3;i1++)
-		 {
-			 cal.set(2012, i1, 21);
-		     String dater_s = cal.get(Calendar.DATE)+"-"+months[cal.get(Calendar.MONTH)]+"-"+cal.get(Calendar.YEAR);
-			 Intent intent1= new Intent(this,NotificationService.class );
-			 intent1.putExtra("dater_s", dater_s);
-			 intent1.putExtra("id", i1);
-			 if(tab.getText().equals("Tab 2"))
-			{
-			  startService(intent1);
-			} 
-		 }
 		 
-		if(tab.getText().equals("Tab 3"))
-		{
-		  stopService(new Intent(this,NotificationService.class));
-		}
 		
 	}
 	@Override
