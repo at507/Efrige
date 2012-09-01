@@ -41,6 +41,7 @@ import android.database.Cursor;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +75,7 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
     SpecialAdapter frozenAdapter;
 	SpecialAdapter normalAdapter;
 	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
@@ -82,11 +84,23 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
 		setContentView(R.layout.activity_display);
 		Intent intent= getIntent();
 		dater= intent.getStringExtra("date");
+		Is_frozen = intent.getBooleanExtra("Isfrozen", true);
 		title = (TextView) findViewById(R.id.title);
 		title.setText(dater);
 		
 		switcher = (ViewSwitcher) findViewById(R.id.profileSwitcher);
 		slideToUnLock = (MySwitch)findViewById(R.id.switch1);
+		if(Is_frozen)
+		{
+			slideToUnLock.setChecked(false);
+			
+		}
+		else
+		{
+			slideToUnLock.setChecked(true);
+		}
+		
+		
 		slideToUnLock.setOnCheckedChangeListener(this);
 	    
 		Button addItem_cold_Button = (Button)findViewById(R.id.addItem_cold);
@@ -94,15 +108,126 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
 		addItem_cold_Button.setOnClickListener(this);
 		addItem_normal_Button.setOnClickListener(this);
 		
+		
 		previous_day = (TextView) findViewById(R.id.previous_day);
 		next_day = (TextView) findViewById(R.id.next_day);
 		previous_day.setOnClickListener(this);
 		next_day.setOnClickListener(this);	
 		frozenAdapter = new SpecialAdapter(DisplayActivityList.this, Cold_itemsadded);
 		normalAdapter = new SpecialAdapter(DisplayActivityList.this, Normal_itemsadded);
-		 cursor = efridge.fridgeData.query();
-		 startManagingCursor(cursor);
+		cursor = efridge.fridgeData.query();
+		startManagingCursor(cursor);
+       
+        if (cursor.getCount()>0)
+	    {
+        	if(Is_frozen)
+        	{
+        		cursor.moveToFirst();
+        		do
+        		{
+        			if(cursor.getString(1).equals(dater))
+    	    		{
+        				String test = cursor.getString(2);
+    	    			String cat = cursor.getString(3);
+    		    		if(cat.equals("Frozen"))
+    		    		{
+    		    			Log.d("Cold", "It is frozen");
+    		    			Cold_itemsadded.add(test);
+    		    			ItemView = (ListView) findViewById(R.id.list_cold);	
+    		    			
+    		    		//	ItemView.setAdapter(frozenAdapter);
+    		    		//	this.frozenAdapter.notifyDataSetChanged();
+    		    			ItemView.setOnItemClickListener(new OnItemClickListener() {
+    		    			
+    		    				
+    							@Override
+    							public void onItemClick(AdapterView<?> arg0,
+    									View v, int position, long id) {
+    							
+    				    			ItemView.setAdapter(frozenAdapter);
+    								
+    								AlertDialog.Builder adb=new AlertDialog.Builder(DisplayActivityList.this);
+    						        adb.setTitle("Delete?");
+    						        adb.setMessage("Are you sure you want to delete " + Cold_itemsadded.get(position));
+    						        final int positionToRemove = position;
+    						        adb.setNegativeButton("Cancel", null);
+    						        adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+    						            public void onClick(DialogInterface dialog, int which) {
+    						            	efridge.fridgeData.delete(Cold_itemsadded.get(positionToRemove).toString());
+    						            	Cold_itemsadded.remove(positionToRemove);
+    						                frozenAdapter.notifyDataSetChanged();
+    						            }});
+    						        adb.show();
+    						       
 
+
+    							}
+    						});
+    		    		
+    		    			
+    		    			
+    		    		}
+        				
+    	    		}
+        			
+        		}while (cursor.moveToNext());
+        		
+        	}
+        	else
+        	{
+        		cursor.moveToFirst();
+        		do
+        		{
+        			if(cursor.getString(1).equals(dater))
+    	    		{
+        				
+        				String test = cursor.getString(2);
+    	    			String cat = cursor.getString(3);
+    		    		if(cat.equals("Normal"))
+    		    		{
+    		    			
+    		    			Log.d("Normal added", test);
+        				Normal_itemsadded.add(test);
+						ItemView = (ListView) findViewById(R.id.list_normal);	
+					//	ItemView.setAdapter(normalAdapter);
+					//	this.normalAdapter.notifyDataSetChanged();
+						ItemView.setOnItemClickListener(new OnItemClickListener() {
+	    					
+							@Override
+							public void onItemClick(AdapterView<?> arg0,
+									View v, int position, long id) {
+								
+				    			ItemView.setAdapter(normalAdapter);
+								AlertDialog.Builder adb=new AlertDialog.Builder(DisplayActivityList.this);
+						        adb.setTitle("Delete?");
+						        adb.setMessage("Are you sure you want to delete " + Normal_itemsadded.get(position));
+						        final int positionToRemove = position;
+						        adb.setNegativeButton("Cancel", null);
+						        adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+						            public void onClick(DialogInterface dialog, int which) {
+						            	efridge.fridgeData.delete(Normal_itemsadded.get(positionToRemove).toString());
+						                Normal_itemsadded.remove(positionToRemove);
+						                normalAdapter.notifyDataSetChanged();
+						            }});
+						        adb.show();
+
+
+							}
+						});
+		    		
+		    			}			
+        				
+        				
+        				
+        				
+        				
+    	    		}
+        			
+        		}while (cursor.moveToNext());
+        	}
+        	
+	    }
+		/*
 	    if (cursor.getCount()>0)
 	    {
 	    	while (cursor.moveToNext())
@@ -112,11 +237,12 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
 	    		{
 	    			String test = cursor.getString(2);
 	    			String cat = cursor.getString(3);
-		    		if(cat.equals("Frozen"))
+		    		if(cat.equals("Frozen")&&(Is_frozen == true))
 		    		{
+		    			Log.d("Cold", "It is frozen");
 		    			Cold_itemsadded.add(test);
 		    			ItemView = (ListView) findViewById(R.id.list_cold);	
-		    			//ItemView.setAdapter(new SpecialAdapter(DisplayActivityList.this, Cold_itemsadded));
+		    			
 		    			ItemView.setAdapter(frozenAdapter);
 		    			ItemView.setOnItemClickListener(new OnItemClickListener() {
 		    			
@@ -124,9 +250,9 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
 							@Override
 							public void onItemClick(AdapterView<?> arg0,
 									View v, int position, long id) {
-							//	frozenAdapter= new SpecialAdapter(DisplayActivityList.this, Cold_itemsadded);
+							
 				    			ItemView.setAdapter(frozenAdapter);
-								// TODO Auto-generated method stub
+								
 								AlertDialog.Builder adb=new AlertDialog.Builder(DisplayActivityList.this);
 						        adb.setTitle("Delete?");
 						        adb.setMessage("Are you sure you want to delete " + Cold_itemsadded.get(position));
@@ -150,16 +276,17 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
 		    		}
 		    		else
 		    		{
+		    			if(Is_frozen == false)
+		    			{
 		    			Normal_itemsadded.add(test);
 						ItemView = (ListView) findViewById(R.id.list_normal);	
-						//ItemView.setAdapter(new SpecialAdapter(DisplayActivityList.this, Normal_itemsadded));
 						ItemView.setAdapter(normalAdapter);
 						ItemView.setOnItemClickListener(new OnItemClickListener() {
 	    					
 							@Override
 							public void onItemClick(AdapterView<?> arg0,
 									View v, int position, long id) {
-								//normalAdapter = new SpecialAdapter(DisplayActivityList.this, Normal_itemsadded);
+								
 				    			ItemView.setAdapter(normalAdapter);
 								AlertDialog.Builder adb=new AlertDialog.Builder(DisplayActivityList.this);
 						        adb.setTitle("Delete?");
@@ -178,12 +305,26 @@ public class DisplayActivityList extends baseActivity implements  OnChangeAttemp
 							}
 						});
 		    		
-					//	ItemView.setOnItemClickListener();
-									 
+		    			}			 
 		    		}
 	    		}
 	    	}
-	    }
+	    }*/
+        if(Is_frozen)
+		 {
+		 	ItemView = (ListView) findViewById(R.id.list_cold);  
+		   // frozenAdapter= new SpecialAdapter(DisplayActivityList.this, Cold_itemsadded);
+		    ItemView.setAdapter(frozenAdapter);
+		    this.frozenAdapter.notifyDataSetChanged();
+		    
+		 }
+		 else
+		 {
+			 ItemView = (ListView) findViewById(R.id.list_normal);  
+			 //normalAdapter= new SpecialAdapter(DisplayActivityList.this, Normal_itemsadded);
+			 ItemView.setAdapter(normalAdapter);
+			 this.normalAdapter.notifyDataSetChanged();
+		 }
 	    
 	}
 
